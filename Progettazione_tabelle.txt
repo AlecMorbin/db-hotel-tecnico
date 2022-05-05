@@ -1,0 +1,54 @@
+﻿CREATE TABLE [dbo].[Configurazione]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[titolo] VARCHAR(50) NOT NULL,
+	[descrizione] VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE [dbo].[Stanze]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[numero_stanza] int NOT NULL,
+	[piano] SMALLINT NOT NULL,
+	[numero_letti] TINYINT NOT NULL
+);
+
+CREATE TABLE [dbo].[Prenotazioni]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[data] DATETIME NOT NULL,
+	[id_stanza] INT NOT NULL,
+	[id_configurazione] INT NOT NULL, 
+    CONSTRAINT [FK_Prenotazioni_Stanze] FOREIGN KEY ([id_stanza]) REFERENCES [Stanze]([id]),
+    CONSTRAINT [FK_Prenotazioni_Configurazione] FOREIGN KEY ([id_configurazione]) REFERENCES [Configurazione]([id])
+);
+
+CREATE TABLE [dbo].[Pagamenti]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[id_prenotazione] INT NOT NULL,
+	[status] VARCHAR(50) NOT NULL,
+	[importo] SMALLINT NOT NULL, 
+    CONSTRAINT [FK_Pagamenti_Prenotazioni] FOREIGN KEY ([id_prenotazione]) REFERENCES [Prenotazioni]([id])
+);
+
+CREATE TABLE [dbo].[Ospiti]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[nome] VARCHAR(50) NOT NULL,
+	[conome] VARCHAR(50) NOT NULL,
+	[data_nascita] DATETIME NOT NULL,
+	[tipo_documento] VARCHAR(50) NOT NULL,
+	[numero documento] BIGINT  NOT NULL
+);
+
+CREATE TABLE [dbo].[Ospiti_Prenotazioni]
+(
+	[id_prenotazione] INT NOT NULL,
+	[id_ospite] INT NOT NULL, 
+    CONSTRAINT [FK_Table_Prenotazione] FOREIGN KEY ([id_prenotazione]) REFERENCES [Prenotazioni]([id]), 
+    CONSTRAINT [FK_Table_Ospiti] FOREIGN KEY ([id_ospite]) REFERENCES [Ospiti]([id])
+);
+
+
+
