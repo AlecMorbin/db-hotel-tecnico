@@ -32,3 +32,5 @@ where floor=1
 group by floor;
 --11. Le stanze sono state tutte prenotate almeno una volta? (Visualizzare le stanze
 --non ancora prenotate) - BONUS
+select room_number,floor,beds,stanze.created_at,stanze.updated_at from prenotazioni right join stanze on stanza_id=stanze.id
+where stanza_id is NULL;
