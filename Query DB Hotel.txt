@@ -17,3 +17,18 @@ select sum(beds) as posti_letto_totali from stanze;
 select sum(price)as somma_prezziz,status from pagamenti group by status;
 --8. Conta quante volte è stata prenotata ogni stanza
 select count(stanza_id)as numero_prenotazioni,stanza_id from prenotazioni group by stanza_id;
+
+--JOIN
+--9. Stampare tutti gli ospiti per ogni prenotazione
+select ospiti.name,ospiti.lastname,ospiti.date_of_birth,ospiti.document_type,ospiti.document_number,prenotazione_id from ospiti
+join prenotazioni_has_ospiti on ospite_id=ospiti.id
+join prenotazioni on prenotazione_id=prenotazioni.id
+order by prenotazione_id asc;
+--10. Fai la somma di tutti i prezzi delle prenotazioni per le stanze del primo piano
+select floor,sum(price)as prezzo from pagamenti 
+join prenotazioni on prenotazione_id=prenotazioni.id
+join stanze on stanza_id=stanze.id
+where floor=1
+group by floor;
+--11. Le stanze sono state tutte prenotate almeno una volta? (Visualizzare le stanze
+--non ancora prenotate) - BONUS
