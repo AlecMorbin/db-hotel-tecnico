@@ -11,3 +11,9 @@ select  sum(price) as incasso_totale from pagamenti where status='accepted';
 select  max(price) as prezzo_massimo_pagato from pagamenti where status='accepted';
 --6. Quanti posti letto ha l’hotel in totale?
 select sum(beds) as posti_letto_totali from stanze;
+
+--GROUP BY
+--7. Somma i prezzi dei pagamenti raggruppandoli per status
+select sum(price)as somma_prezziz,status from pagamenti group by status;
+--8. Conta quante volte è stata prenotata ogni stanza
+select count(stanza_id)as numero_prenotazioni,stanza_id from prenotazioni group by stanza_id;
